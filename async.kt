@@ -1,3 +1,4 @@
+
 import android.util.Log
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.UI
@@ -19,16 +20,14 @@ fun <T> start(block: suspend () -> T): Deferred<Async<T>> {
     }
 }
 
-infix fun <T, R> Deferred<Async<T>>.then(block: suspend (T) -> R): Deferred<Async<R>> {
+infix fun <T, R> Deferred<Async<T>>.then(block: suspend (T?) -> R): Deferred<Async<R>> {
     return async(context = CommonPool, start = CoroutineStart.LAZY) {
         try {
             val e = this@then.await().e
             if (e != null) {
                 return@async Async<R>(e = e)
             }
-            val v = this@then.await().v
-                    ?: return@async Async<R>(e = NullPointerException("deferred is null..."))
-            Async(v = block(v))
+            Async(v = block(this@then.await().v))
         } catch (e: Exception) {
             loge(e) { "there are some errors on then: " }
             Async<R>(e = e)

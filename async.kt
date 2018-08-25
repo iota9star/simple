@@ -1,4 +1,3 @@
-
 import android.util.Log
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.UI
@@ -57,50 +56,50 @@ infix fun <T> Deferred<Async<T>>.inSub(result: suspend (Async<T>) -> Unit): Job 
     }
 }
 
-fun <A, B, R> Deferred<A>.combine(b: Deferred<B>, cr: CoroutineCombine2<A, B, R>): Deferred<R> {
+fun <A, B, R> Deferred<A>.combine(b: Deferred<B>, cr: DeferredCombine2<A, B, R>): Deferred<R> {
     return async(context = CommonPool, start = CoroutineStart.LAZY) { cr.apply(this@combine.await(), b.await()) }
 }
 
-fun <A, B, C, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, cr: CoroutineCombine3<A, B, C, R>): Deferred<R> {
+fun <A, B, C, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, cr: DeferredCombine3<A, B, C, R>): Deferred<R> {
     return async(context = CommonPool, start = CoroutineStart.LAZY) { cr.apply(this@combine.await(), b.await(), c.await()) }
 }
 
-fun <A, B, C, D, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, d: Deferred<D>, cr: CoroutineCombine4<A, B, C, D, R>): Deferred<R> {
+fun <A, B, C, D, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, d: Deferred<D>, cr: DeferredCombine4<A, B, C, D, R>): Deferred<R> {
     return async(context = CommonPool, start = CoroutineStart.LAZY) { cr.apply(this@combine.await(), b.await(), c.await(), d.await()) }
 }
 
-fun <A, B, C, D, E, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, d: Deferred<D>, e: Deferred<E>, cr: CoroutineCombine5<A, B, C, D, E, R>): Deferred<R> {
+fun <A, B, C, D, E, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, d: Deferred<D>, e: Deferred<E>, cr: DeferredCombine5<A, B, C, D, E, R>): Deferred<R> {
     return async(context = CommonPool, start = CoroutineStart.LAZY) { cr.apply(this@combine.await(), b.await(), c.await(), d.await(), e.await()) }
 }
 
-fun <A, B, C, D, E, F, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, d: Deferred<D>, e: Deferred<E>, f: Deferred<F>, cr: CoroutineCombine6<A, B, C, D, E, F, R>): Deferred<R> {
+fun <A, B, C, D, E, F, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, d: Deferred<D>, e: Deferred<E>, f: Deferred<F>, cr: DeferredCombine6<A, B, C, D, E, F, R>): Deferred<R> {
     return async(context = CommonPool, start = CoroutineStart.LAZY) { cr.apply(this@combine.await(), b.await(), c.await(), d.await(), e.await(), f.await()) }
 }
 
-fun <A, B, C, D, E, F, G, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, d: Deferred<D>, e: Deferred<E>, f: Deferred<F>, g: Deferred<G>, cr: CoroutineCombine7<A, B, C, D, E, F, G, R>): Deferred<R> {
+fun <A, B, C, D, E, F, G, R> Deferred<A>.combine(b: Deferred<B>, c: Deferred<C>, d: Deferred<D>, e: Deferred<E>, f: Deferred<F>, g: Deferred<G>, cr: DeferredCombine7<A, B, C, D, E, F, G, R>): Deferred<R> {
     return async(context = CommonPool, start = CoroutineStart.LAZY) { cr.apply(this@combine.await(), b.await(), c.await(), d.await(), e.await(), f.await(), g.await()) }
 }
 
-interface CoroutineCombine2<A, B, R> {
+interface DeferredCombine2<A, B, R> {
     fun apply(a: A, b: B): R
 }
 
-interface CoroutineCombine3<A, B, C, R> {
+interface DeferredCombine3<A, B, C, R> {
     fun apply(a: A, b: B, c: C): R
 }
 
-interface CoroutineCombine4<A, B, C, D, R> {
+interface DeferredCombine4<A, B, C, D, R> {
     fun apply(a: A, b: B, c: C, d: D): R
 }
 
-interface CoroutineCombine5<A, B, C, D, E, R> {
+interface DeferredCombine5<A, B, C, D, E, R> {
     fun apply(a: A, b: B, c: C, d: D, e: E): R
 }
 
-interface CoroutineCombine6<A, B, C, D, E, F, R> {
+interface DeferredCombine6<A, B, C, D, E, F, R> {
     fun apply(a: A, b: B, c: C, d: D, e: E, f: F): R
 }
 
-interface CoroutineCombine7<A, B, C, D, E, F, G, R> {
+interface DeferredCombine7<A, B, C, D, E, F, G, R> {
     fun apply(a: A, b: B, c: C, d: D, e: E, f: F, g: G): R
 }
